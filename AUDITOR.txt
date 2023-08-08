@@ -1,0 +1,31 @@
+Hello Auditor
+
+Read this if you'd like to understand the way we approached this project.
+
+From a backend POV, our priority was to convert everything from JSON to golang, and
+we accomplished that in the data_structs.go files in the handlers folder. If you compare
+it to the json file, you'd find that its is nothing but a mirror of it if that makes sense.
+
+Our next task is using the golang structs to manipulate our website. we used multiple
+js (no Javascript was used for backend for backend) files to parse any parameters the user sent
+from the frontend (Read about JQuery), and we send that to our golang backend. Check script_handle.go,
+staticfiles_handle.go, and script_handle.go, we use the methods in them to serve any file the user desire.
+
+we also use JQuery to organise the response our golang backend sends into a inner HTML
+(check search_bands.js as an example). Javascript was mainly used to beautify our frontend, and
+we especially made sure not to use it in the backend to adhere to our project requirements
+
+The main algorithm for filtration / searching follows a certain pattern:
+
+1. Parse parameters
+2. Get all matching data from all the golang structs for every band
+3. find compatible results
+4. send to frontend js to beautify and reload the /bands page
+
+You might also notice there is a tailwind.config.js file. It is for the sole purpose of configuring tailwind,
+which is the main css behind this project. You can find the main directives of tailwind css in src/input.css. We also used some native CSS for the modals too.
+
+There is also a Dockerfile present; along with a build.sh file. If you have a running docker daemon, build and run build.sh to run a containerized image of this project, and save you all the bother of navigation and running servers and all.
+
+I (akhaled), would like to extend my biggest thanks to sameer (sahmed) and mohammed (malsamma) as they have
+in my opinion outdone themselves in this project, and I wish we continue on the same path we are now.
