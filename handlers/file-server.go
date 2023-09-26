@@ -2,7 +2,6 @@ package ConcertAPI
 
 import (
 	"net/http"
-	"strconv"
 	"strings"
 )
 
@@ -80,16 +79,6 @@ func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	} else if Path == "/favicon.ico" {
 		filename := "favicon.ico"
 		ScriptsServ(w, req, filename)
-	} else if strings.Contains(Path, "/html/404") {
-		if Method == "GET" {
-			error_code := strings.ReplaceAll(req.URL.Path, "/html/404/", "")
-			error_code = strings.Split(error_code, ".")[0]
-			error_code_int, _ := strconv.Atoi(error_code)
-			ServeError(w, req, error_code_int)
-		} else {
-			w.WriteHeader(http.StatusBadRequest)
-			ServeError(w, req, 400)
-		}
 	} else {
 		w.WriteHeader(http.StatusNotFound)
 		ServeError(w, req, 404)

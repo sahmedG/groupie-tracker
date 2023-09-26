@@ -21,6 +21,8 @@ func StylesServ(w http.ResponseWriter, req *http.Request, filename string) {
 		http.ServeFile(w, req, "../html/css/404.css")
 	case "bands.css":
 		http.ServeFile(w, req, "../html/css/bands.css")
+	case "BAR.css":
+		http.ServeFile(w, req, "../html/css/BAR.css")
 	}
 	// http.ServeFile(w, req, "../html/css/"+filename)
 }

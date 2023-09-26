@@ -1,27 +1,43 @@
 let search_val = ""
+const resultBox = document.getElementById("resultbox");
+const inputbox = document.getElementById("inputbox");
+const filterBox = document.getElementById("openbtn");
+let possiblecases = [];
+var matches = "";
+var response = null;
 
+
+resultBox.style.display = "none";
 onChangeListener = () => {
-  $("#search").val(search_val)
+  $("#inputbox").val(search_val)
   console.log("onChangeListener")
 }
 
 $(document).ready(function () {
-  $("#search").on(
+
+  $("#inputbox").on(
     "keyup",
     debounce(0, function () {
-      if (!$("#search").val()) {
+      if (!$("#resultBox").val()) {
+        resultBox.style.display = "block";
+        filterBox.style.display = "none";
+      }
+      if (!$("#inputbox").val()) {
+        $("#resultbox").empty();
+        resultBox.style.display = "none";
+        filterBox.style.display = "block";
         $("#container").empty();
-        search_val = $("#search").val()
+        search_val = $("#inputbox").val()
         updateCards();
         return;
       }
-      search_val = $("#search").val()
+      search_val = $("#inputbox").val()
       $.ajax({
         type: "POST",
         url: "/find",
         dataType: "json",
         data: {
-          search: $("#search").val(),
+          search: $("#inputbox").val(),
         },
         traditional: true,
 
@@ -34,22 +50,31 @@ $(document).ready(function () {
           }
           //update response for openModal()
           response = retrievedData;
+          possiblecases = [];
+          possiblecases2 = [];
+          bands_ids = [];
           $("#container").empty();
           $.each(retrievedData, function (_, value) {
             var members = "<br>";
             var id = value.BandId;
-            var possiblecases = "";
 
             $.each(value.Members, function (_, value) {
               members += value + "<br>";
             });
-            $.each(value.MatchedOn, function (key, value) {
-             possiblecases = (value.split(','));
+
+            $.each(value.MatchedOn, function (_, value) {
+              possiblecases.push(value);
+              bands_ids.push()
             });
+            possiblecases2 = possiblecases;
+            $.each(value.MatchedOn, function (_, value) {
+              possiblecases = (value.split(','));
+            });
+
             var matches = "";
             $.each(possiblecases, function (_, value) {
               matches += value + "<br>";
-             });
+            });
 
             if (!$("#" + id).length) {
               $("#container")
@@ -69,7 +94,7 @@ $(document).ready(function () {
                       <button class="button" onclick="openModal(${id})">
                         <span class="button_lg">
                           <span class="button_sl"></span>
-                          <<span class="button_text">More Info</span>
+                          <span class="button_text">More Info</span>
                         </span>
                       </button>
                     </div>
@@ -80,6 +105,7 @@ $(document).ready(function () {
                 .fadeIn("fast");
             }
           });
+          displayResult(possiblecases2);
         },
         error: function (_, _, errorThrown) {
           console.log(errorThrown);
@@ -128,3 +154,82 @@ un_expand = () => {
     $("#search").blur()
   }
 }
+
+
+function displayResult(result) {
+  let stuff = result.toString().split(",")
+  let content = [];
+  // $.each(stuff, function (_, value) {
+  //   content.push("<li onclick=selectInput(this)>" + value + "</li>");
+  // });
+  for (let i = 0; i < stuff.length; i++) {
+    var element = stuff[i];
+
+    if (content.includes("<li onclick=selectInput(this)>" + element + "</li>")) {
+      continue;
+    }
+    content.push("<li onclick=selectInput(this)>" + element + "</li>");
+  }
+
+  AppendResultBox(content);
+}
+
+function AppendResultBox(content) {
+  resultBox.innerHTML = "";
+  resultBox.innerHTML = "<ul>" + content.join("") + "</ul>";
+}
+
+
+function selectInput(list) {
+  inputbox.value = list.innerHTML;
+  resultBox.style.display = "none";
+  UpdateContent(list);
+}
+
+
+function UpdateContent(modalReference) {
+  //  console.log(modalReference.innerHTML.length);
+  $("#container").empty();
+  $.each(response, function (key, value) {
+    targetCardIndex = -1;
+    $.each(value.MatchedOn, function (_, value) {
+      const value_array = value.split(",");
+      for (let i = 0;i< value_array.length;i++){
+        if (value_array[i] == modalReference.innerHTML) {
+          targetCardIndex = key;
+          break
+        };
+      };
+    });
+
+    if (targetCardIndex >= 0) {
+      $("#container")
+        .append(
+          `<div class="rounded overflow-hidden shadow-lg bg-white max-w-fit">
+            <img
+              class=""
+              src="${response[targetCardIndex].Image}"
+              alt="${response[targetCardIndex].Name}"
+            />
+            <div class="px-6 py-4">
+              <div class="font-bold text-xl mb-2 text-center flex flex-wrap">
+              <h3>${response[targetCardIndex].Name}</h3>
+              </div>
+              <div class="py-6 flex justify-center">
+                <button class="button" onclick="openModal(${response[targetCardIndex].BandId})">
+                  <span class="button_lg">
+                    <span class="button_sl"></span>
+                    <span class="button_text">More Info</span>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>`
+        )
+        .hide()
+        .fadeIn("fast");
+    };
+  });
+
+}
+

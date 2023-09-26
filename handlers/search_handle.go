@@ -20,7 +20,7 @@ func FindBand(w http.ResponseWriter, r *http.Request) {
 
 	//convert everything to lower case to ease search algorithm
 	searchingFor := strings.ToLower(r.FormValue("search"))
-    fmt.Println(searchingFor)
+    //fmt.Println(searchingFor)
 	for pers, art := range inputs.Artists {
 		MatchedOn := ""
 		PossibleResults := ""
@@ -29,25 +29,25 @@ func FindBand(w http.ResponseWriter, r *http.Request) {
 			data = FetchData(pers)
 			dataArr = append(dataArr, data)
 			currIndex++
-			MatchedOn += "Group name: " + art.Name
+			MatchedOn += "Group name: " + art.Name + "\n"
 			PossibleResults += art.Name
 			//search for Founded ons
 		} else if strings.Contains(strconv.Itoa(art.CreationDate), searchingFor) {
 			if len(dataArr) >= 1 {
 				if dataArr[currIndex-1].Name != art.Name {
 					data = FetchData(pers)
-					MatchedOn += "Founded on: " + strconv.Itoa(art.CreationDate)
+					MatchedOn += "Founded on: " + strconv.Itoa(art.CreationDate) + "\n"
 					PossibleResults += strconv.Itoa(art.CreationDate)
 					dataArr = append(dataArr, data)
 					currIndex++
 				} else {
 					if !strings.Contains(MatchedOn, "Founded on: ") {
-						MatchedOn += ", Founded on: " + strconv.Itoa(art.CreationDate)
+						MatchedOn += ", Founded on: " + strconv.Itoa(art.CreationDate) + "\n"
 					}
 				}
 			} else {
 				data = FetchData(pers)
-				MatchedOn += "Founded on: " + strconv.Itoa(art.CreationDate)
+				MatchedOn += "Founded on: " + strconv.Itoa(art.CreationDate) + "\n"
 				PossibleResults += strconv.Itoa(art.CreationDate)
 				dataArr = append(dataArr, data)
 				currIndex++
@@ -58,18 +58,18 @@ func FindBand(w http.ResponseWriter, r *http.Request) {
 				if len(dataArr) >= 1 {
 					if dataArr[currIndex-1].Name != art.Name {
 						data = FetchData(pers)
-						MatchedOn += "First album: " + art.FirstAlbum
+						MatchedOn += "First album: " + art.FirstAlbum + "\n"
 						PossibleResults += art.FirstAlbum
 						dataArr = append(dataArr, data)
 						currIndex++
 					} else {
 						if !strings.Contains(MatchedOn, "First album: ") {
-							MatchedOn += ", First album: " + art.FirstAlbum
+							MatchedOn += ", First album: " + art.FirstAlbum + "\n"
 						}
 					}
 				} else {
 					data = FetchData(pers)
-					MatchedOn += "First album: " + art.FirstAlbum
+					MatchedOn += "First album: " + art.FirstAlbum + "\n"
 					PossibleResults += art.FirstAlbum
 					dataArr = append(dataArr, data)
 					currIndex++
@@ -80,23 +80,22 @@ func FindBand(w http.ResponseWriter, r *http.Request) {
 		for _, member := range art.Members {
 			if strings.Contains(strings.ToLower(member), searchingFor) {
 				if len(dataArr) >= 1 {
-					fmt.Println(dataArr[currIndex-1].Name)
 					if dataArr[currIndex-1].Name != art.Name {
 						data = FetchData(pers)
-						MatchedOn += "Member name: " + member
+						MatchedOn += "Member name: " + member + "\n"
 						PossibleResults += member
 						dataArr = append(dataArr, data)
 						currIndex++
 					} else {
 						if !strings.Contains(MatchedOn, "Member name: ") {
-							MatchedOn +=", Member name: " +member
+							MatchedOn +=", Member name: " +member + "\n"
 						} else {
 							break
 						}
 					}
 				} else {
 					data = FetchData(pers)
-					MatchedOn += "Member name: " + member
+					MatchedOn += "Member name: " + member + "\n"
 					PossibleResults += member
 					dataArr = append(dataArr, data)
 					currIndex++
@@ -106,19 +105,19 @@ func FindBand(w http.ResponseWriter, r *http.Request) {
 
 		for _, location := range inputs.Locations.Index[art.ID-1].Locations {
 			location = (strings.ToLower(location))
-
 			location = strings.Replace(location, "_", " ", -1)
 			if strings.Contains(location, searchingFor) {
 				if len(dataArr) >= 1 {
 					if dataArr[currIndex-1].Name != art.Name {
 						data = FetchData(pers)
-						MatchedOn += "Location: " + location
+						MatchedOn += "Location: "+location + "\n"
 						PossibleResults += location
+						fmt.Println(location)
 						dataArr = append(dataArr, data)
 						currIndex++
 					} else {
-						if !strings.Contains(MatchedOn, "Location: ") {
-							MatchedOn += ", Location: " + location
+						if  strings.Contains(MatchedOn, "Location: ") {
+							MatchedOn += ", Location: " + location + "\n"
 						} else {
 							break
 						}
@@ -126,9 +125,16 @@ func FindBand(w http.ResponseWriter, r *http.Request) {
 				} else {
 					data = FetchData(pers)
 					dataArr = append(dataArr, data)
-					MatchedOn += "Location: " + location
+					loop:
+					MatchedOn += "Location: " + location + "\n"
 					PossibleResults += location
+
+					fmt.Println(location)
+
 					currIndex++
+					if strings.Contains(location, searchingFor) && len(MatchedOn) < 3{
+						goto loop
+					}
 				}
 			}
 		}

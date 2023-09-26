@@ -103,7 +103,7 @@ function displayConcerts() {
 
     $("#concerts-content").append(
       `<div class="form-check">
-            <input class="form-check-input position-static" type="checkbox" 
+            <input class="form-check-input position-static" type="checkbox"
             id = "` +
         value +
         `"
@@ -114,7 +114,7 @@ function displayConcerts() {
         value +
         `" > ` +
         ctr +
-        ` </label> 
+        ` </label>
         </div>`
     );
   });

@@ -1,0 +1,56 @@
+.searchbox {
+  width: 600px;
+  background-color: transparent;
+  border-radius: 5px;
+  background-color: #333;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+input {
+  flex: 1;
+  height: 50px;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  font-size: 18px;
+  color: wheat;
+}
+
+button {
+  background: transparent;
+  border: 0;
+  outline: 0;
+}
+
+button .fa-brands {
+  width: 25px;
+  color: wheat;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+::placeholder {
+  color: wheat;
+}
+
+.result-box ul {
+  border-top: 1px solid #999;
+  padding: 15px 10px;
+}
+
+.result-box ul li {
+  list-style: none;
+  border-radius: 3px;
+  padding: 15px 10px;
+  cursor: pointer;
+}
+
+.result-box ul li:hover {
+  background-color: #333;
+}
+

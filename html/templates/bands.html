@@ -1,56 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
     <link rel="stylesheet" href="/css/output.css" />
     <link rel="stylesheet" href="/css/bands.css" />
-        <link rel="stylesheet" href="/css/sidenav.css" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-        <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/smoothness/jquery-ui.css" />
-        <script src="https://api-maps.yandex.ru/2.1?apikey=d8056c94-5f4a-4a39-ae69-2b43f39055dd&lang=en_US"></script>
-        <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly" defer></script> -->
-        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-        <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <title>All Bands</title>
+    <link rel="stylesheet" href="/css/sidenav.css" />
+    <link rel="stylesheet" href="/css/BAR.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.13.1/themes/smoothness/jquery-ui.css"
+    />
+    <script src="https://api-maps.yandex.ru/2.1?apikey=d8056c94-5f4a-4a39-ae69-2b43f39055dd&lang=en_US"></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly" defer></script> -->
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+      body::-webkit-scrollbar {
+        display: none;
+      }
+      @font-face {
+        font-family: "Norse Bold";
+        src: url("../static/Norse-Bold.otf") format("opentype");
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      .search-input {
+        padding-left: 1em;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        font-family: 'Norse Bold', sans-serif;
+      }
+    </style>
+    <title>Bands</title>
   </head>
   <body class="bg-zinc-800">
-    <h1 style="margin-bottom: -1%;" class="text-center text-5xl text-nextOrange py-6">All Bands</h1>
-    <div class="search-container" >
+    <a href="/">
+      <h1
+        style="margin-top: 1.5em; font-family: 'Norse Bold', sans-serif; font-size: 5em;"
+        class="text-center text-5xl text-nextOrange py-6"
+      >
+        All Bands
+      </h1>
+    </a>
+    <div class="search-container">
       <div>
         <span id="openbtn"><i id="filter" class="fa fa-filter"></i></span>
-      </div> 
-      <div class="box" onmouseleave="un_expand()" onclick="expand()" onchange="onChangeListener()">
-        <form name="search">
-            <input id="search" type="text" class="input" name="txt">
-        </form>
-        <i class="fa fa-search"></i>
+      </div>
+      <div class="searchbox">
+        <div class="row">
+          <input
+            style="color: white"
+            class="search-input"
+            type="text"
+            id="inputbox"
+            placeholder="search"
+            autocomplete="off"
+          />
+        </div>
+        <div
+          class="result-box"
+          id="resultbox"
+          style="color: white; width: auto; overflow-x: auto; overflow-y: auto"
+        ></div>
+      </div>
     </div>
-    </div>
-    <div style="margin: auto;margin-top: 3%;" id="container" class="flex-wrap flex gap-4"></div>
+    <div
+      style="margin: auto; margin-top: 3%"
+      id="container"
+      class="flex-wrap flex gap-4"
+    ></div>
 
-    <div id="no-data" style="display: flex;flex-direction: column; align-items: center;width: auto;height: auto;">
+    <div
+      id="no-data"
+      style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: auto;
+        height: auto;
+      "
+    >
       <img src="/static/sad.png" />
       <h1>!!Sorry!!</h1>
       <h2>no results...</h2>
     </div>
 
-        {{template "side-nav"}} {{template "modal"}}
-        <script src="/js/rendering_data.js"></script>
-        <script src="/js/search_bands.js"></script>
-        <script src="/js/filter_bands.js"></script>
-        <script src="/js/manipulation_css.js"></script>
-        <script src="/js/locations.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <style>
-          h1,h2,h3,h4 {
-            font-family: 'Bebas Neue', sans-serif;
-            color: #5e4259;
-          }
-          </style>
+    {{template "side-nav"}} {{template "modal"}}
+    <script src="/js/rendering_data.js"></script>
+    <script src="/js/search_bands.js"></script>
+    <script src="/js/filter_bands.js"></script>
+    <script src="/js/manipulation_css.js"></script>
+    <script src="/js/locations.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <style>
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Bebas Neue", sans-serif;
+        color: #5e4259;
+      }
+    </style>
   </body>
 </html>

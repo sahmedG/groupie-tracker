@@ -113,6 +113,10 @@
   width: calc(100% + 15px);
 }
 
+.nordicBandTitle {
+  
+}
+
 .button:hover .button_lg::after {
   background-color: #fff;
 }
@@ -121,12 +125,11 @@
   padding-top: 5rem;
   font-size: 30px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row-reverse;
   margin-bottom: auto;
   justify-content: center;
-  position: -webkit-sticky;
-  position: sticky;
   top: 0;
+  align-items: center;
 }
 
 #filter {
@@ -155,12 +158,12 @@
   width: 80px;
   height: 80px;
   background: none;
-  border: 4px solid rgb(255 131 93);
+  /* border: 4px solid rgb(255 131 93); */
   border-radius: 50px;
   box-sizing: border-box;
   font-family: Comic Sans MS;
   font-size: 26px;
-  color: rgb(255 131 93);
+  /* color: rgb(255 131 93); */
   outline: none;
   transition: .5s;
 }
@@ -171,6 +174,6 @@
   right: 15px;
   transform: translate(-50%, -50%);
   font-size: 26px;
-  color: rgb(255 131 93);
+  /* color: rgb(255 131 93); */
   transition: .2s;
 }

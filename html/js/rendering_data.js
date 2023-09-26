@@ -20,7 +20,7 @@ function updateCards() {
         $.each(retrievedData, function (_, value) {
           $("#container")
             .append(
-              ` 
+              `
               <div style="margin:auto;" class="rounded overflow-hidden shadow-lg bg-white max-w-fit">
               <img
                 class=""
@@ -32,7 +32,7 @@ function updateCards() {
                 <h3>${value.Name}</h3>
                 </div>
                 <div class="py-6 flex justify-center">
-                
+
                   <button class="button" onclick="openModal(${value.BandId})">
                     <span class="button_lg">
                       <span class="button_sl"></span>
