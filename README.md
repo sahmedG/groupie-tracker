@@ -26,4 +26,7 @@ This project runs on port 8080. Please use correct requests <br>
 Only standard Go libraries were used <br>
 Read `AUDITOR.txt` for more info 
 
-# Done by sahmed, malsamma and akhaled
+## Contributers
+- [sahmedG](https://github.com/sahmedG) (Sameer Goumaa)
+- [MSK17A](https://github.com/MSK17A) (Mohammed Alsammak)
+- [akhaled01](https://github.com/akhaled01) (Abdulrahman Idrees) 
